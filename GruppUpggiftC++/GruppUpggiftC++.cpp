@@ -107,8 +107,7 @@ Customer LoginToCustomer(vector<Customer>list, AdServingEngine a)
 		cout << "No such user ID in system.";
 	}
 }
-
-void CustomerMenu(AdServingEngine &a, Customer &c)
+void ManageCustomersMenu(AdServingEngine &a)
 {
 	int selection;
 
@@ -129,7 +128,7 @@ void CustomerMenu(AdServingEngine &a, Customer &c)
 		a.UpdateCustomerList(CustomerUpdate(a.GetCustomerList()));
 		break;
 	case 3:
-		ReadAllCustomers(a.GetCustomerList()); // klar
+		ReadAllCustomers(a.GetCustomerList());
 		break;
 	case 4:
 		a.UpdateCustomerList(EraseACustomer(a.GetCustomerList()));
@@ -138,19 +137,45 @@ void CustomerMenu(AdServingEngine &a, Customer &c)
 		break;
 	}
 }
-void CampaignMenu()
+
+
+
+vector<Campaign> CreateCampaign(vector<Campaign> campaignList, Customer c)
+{
+	
+	string name;
+	int id;
+	time_t fromDateTime;
+	time_t toDateTime;
+
+	cout << "Name: ";
+	cin >> name;
+	cout << "ID: ";
+	cin >> id;
+
+	//      fel hantering
+
+	Campaign campaign(string name, int id, time_t fromDateTime, time_t toDateTime);
+	vector<Campaign> list = c.GetCampaignList();
+	list.push_back(campaign);
+
+	return list;
+}
+
+void CampaignMenu(Customer c)
 {
 	int selection;
 
-	cout << "1: Create new Campaign" << endl;
-	cout << "2: Update Campaign" << endl;
-	cout << "3: Read Campaigns" << endl;
+	cout << "1: Create new campaign" << endl;
+	cout << "2: Update campaign" << endl;
+	cout << "3: Read customer campaigns" << endl;
 	cout << "4: Exit" << endl;
 	cin >> selection;
 
 	switch (selection)
 	{
 	case 1:
+		CreateNewCampaign();
 		break;
 	case 2:
 		break;
@@ -161,12 +186,13 @@ void CampaignMenu()
 	}
 
 }
-void AdMenu()
+
+void AdMenu(Customer c)
 {
 	int selection;
 	cout << "1: Create new Ad" << endl;
 	cout << "2: Update Ad" << endl;
-	cout << "3: Read Ads" << endl;
+	cout << "3: Read customer Ads" << endl;
 	cout << "4: Exit" << endl;
 
 	cin >> selection;
@@ -183,30 +209,30 @@ void AdMenu()
 		return;
 	}
 }
-void MainMenu(AdServingEngine &a, Customer &c)
+void CustomerMenu(Customer &c)
 {
 	while (true)
 	{
 		int selection;
 		
-		cout << "1: Customer menu" << endl;
+		cout << "1: Customer settings" << endl;
 		cout << "2: Campaign menu" << endl;
 		cout << "3: Ad menu" << endl;
 		cout << "4: Exit" << endl;
 
-		cout << "Selectoooo" << endl;
+		cout << "-> " << endl;
 		cin >> selection;
 
 		switch (selection)
 		{
 		case 1:
-			CustomerMenu(a,c);
+			//CustomerSettingsMenu(c);
 			break;
 		case 2:
-			CampaignMenu();
+			CampaignMenu(c);
 			break;
 		case 3:
-			AdMenu();
+			AdMenu(c);
 			break;
 		case 4:
 			return;
@@ -220,11 +246,10 @@ int main()
 	AdServingEngine a;
 	while(true)
 	{
-		
 		int selection;
 
 		cout << "1: Go to customer" << endl;
-		cout << "2: Create new customer" << endl;
+		cout << "2: Manage all customers" << endl;
 		cout << "3: Exit" << endl;
 
 		cout << "-> " << endl;
@@ -235,11 +260,11 @@ int main()
 		case 1:
 		{
 			Customer c = LoginToCustomer(a.GetCustomerList(), a);
-			MainMenu(a, c);
+			CustomerMenu(c);
 		}
 			break;
 		case 2:
-			a.UpdateCustomerList(CreateCustomer(a));
+			ManageCustomersMenu(a);
 			break;
 		case 3:
 			cout << "Exiting program........." << endl << endl;
