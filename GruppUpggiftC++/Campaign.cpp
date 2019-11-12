@@ -1,8 +1,6 @@
 #include "Campaign.h"
 #include <vector>
 
-vector<Ad> adsList;
-
 Campaign::Campaign(string name, int id, time_t fromDateTime, time_t toDateTime)
 {
 	this->name = name;
@@ -11,12 +9,20 @@ Campaign::Campaign(string name, int id, time_t fromDateTime, time_t toDateTime)
 	this->toDateTime = toDateTime;
 }
 
-int Campaign::GetID()
+int Campaign::GetCampaignId()
 {
 	return id;
 }
-
-vector<Ad> Campaign::GetAllAdsForCampaign()
+string Campaign::GetCampaignName()
 {
-	return ads;
+	return name;
 }
+time_t Campaign::GetToDateTime()
+{
+	return toDateTime;
+}
+time_t Campaign::GetFromDateTime()
+{
+	return fromDateTime;
+}
+

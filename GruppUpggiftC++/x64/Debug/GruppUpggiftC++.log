@@ -1,2 +1,3 @@
 ﻿  GruppUpggiftC++.cpp
-  GruppUpggiftC++.vcxproj -> D:\OneDrive\Skrivbord\CProjects\GruppUpggiftC++\x64\Debug\GruppUpggiftC++.exe
+  Q:\GitHub\GruppUpggiftC-\GruppUpggiftC++\GruppUpggiftC++.cpp(172) : warning C4715: 'LoginToCustomer': not all control paths return a value
+  GruppUpggiftC++.vcxproj -> Q:\GitHub\GruppUpggiftC-\x64\Debug\GruppUpggiftC++.exe
