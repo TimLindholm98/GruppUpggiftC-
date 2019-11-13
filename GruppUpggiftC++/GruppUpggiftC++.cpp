@@ -40,7 +40,7 @@ time_t SetTime()
 	struct tm structTime = { 0 };  // Initalize to all 0's
 	structTime.tm_year = year + 100;  // This is year-1900, so 112 = 2012
 	structTime.tm_mon = mon -1;
-	structTime.tm_mday = day -1;
+	structTime.tm_mday = day +1;
 	structTime.tm_hour = hour -1;
 
 	time_t time = mktime(&structTime);
@@ -49,11 +49,11 @@ time_t SetTime()
 string ShowTime(time_t timeToShow)
 {
 	time_t timet = timeToShow;
-	char buff[20];
+	char buff[15];
 	struct tm* time;
 	time = localtime(&timet);
 	strftime(buff, sizeof(buff), "%Y-%m-%d", time );
-	string formatedTime = ConvertToString(buff, (sizeof(buff) / sizeof(char)));
+	string formatedTime = ConvertToString(buff, strlen(buff));
 	return formatedTime;
 }
 
@@ -178,7 +178,8 @@ void DisplayAllCampaigns(vector <Campaign>list)
 	{
 		cout << "Campaign name: " << list[i].GetCampaignName() << endl
 			<< "Campaign ID: " << list[i].GetCampaignId() << endl
-			<< "Campaign start date: " << ShowTime(list[i].GetFromDateTime()) << endl; // nånting är fel här fråga stefan!
+			<< "Campaign start date: " << ShowTime(list[i].GetFromDateTime()) << endl
+			<< "Campaign end date: " << ShowTime(list[i].GetToDateTime()) << endl; // nånting är fel här fråga stefan!
 	}
 }
 // Bra måste lägga till felhantering
@@ -194,7 +195,9 @@ vector<Campaign> CreateCampaign(Customer &c)
 
 	//      fel hantering
 
+	cout << "--- from datetime ---" << endl << endl;
 	time_t fromDateTime = SetTime();
+	cout << "--- To datetime ---" << endl << endl;
 	time_t toDateTime = SetTime();
 
 	Campaign campaign(name, id, fromDateTime, toDateTime);
