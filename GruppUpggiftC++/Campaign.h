@@ -23,6 +23,7 @@ public:
 
 	int GetCampaignId();
 	string GetCampaignName();
+	void ChangeCampaignName(string name);
 	time_t GetToDateTime();
 	time_t GetFromDateTime();
 	vector<Ad> GetAllAdsForCampaign();

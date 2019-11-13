@@ -8,6 +8,16 @@
 
 using namespace std;
 
+string ChangeName()
+{
+
+	cout << "Name: ";
+	string name;
+	cin.ignore();
+	getline(cin, name);
+	return name;
+
+}
 string ConvertToString(char* a, int size)
 {
 	int i;
@@ -56,7 +66,6 @@ string ShowTime(time_t timeToShow)
 	string formatedTime = ConvertToString(buff, strlen(buff));
 	return formatedTime;
 }
-
 vector<Customer> CreateAdmin(AdServingEngine& a)
 {
 	string name = "Admin";
@@ -71,6 +80,9 @@ vector<Customer> CreateAdmin(AdServingEngine& a)
 
 	return list;
 }
+
+//---Customer Functions------------------------------------------------------------------------------
+
 vector<Customer> EraseACustomer(vector <Customer> list)
 {
 	int id;
@@ -132,10 +144,11 @@ void DisplayAllCustomers(vector <Customer>list)
 // Bra måste lägga till felhantering
 vector<Customer> CreateCustomer(AdServingEngine &a)
 {
+	cin.ignore();
 	string name;
 	int id;
 	cout << "Name: ";
-	cin >> name;
+	getline(cin, name);
 	cout << "ID: ";
 	cin >> id;
 
@@ -147,31 +160,8 @@ vector<Customer> CreateCustomer(AdServingEngine &a)
 
 	return list;
 }
-Customer LoginToCustomer(vector<Customer>list, AdServingEngine &a)
-{
-	if (list.size() == 0)
-	{
-		cout << "No Customers created yet, pls create a customer" << endl;
-		list = CreateCustomer(a);
-	}
-	
 
-	int userIdLogin;
-	cout << "--- Login ---" << endl;
-	cout << "Enter User Id: ";
-	cin >> userIdLogin;
-	for (auto x : list)
-	{
-		if (userIdLogin == x.GetCustomerId())
-		{
-			cout << "User Id: " << x.GetCustomerId() << " Logged in" << endl << endl;
-			return x;
-		}
-	}
-	cout << "No such user ID in system." << endl;
-}
-
-//Fråga stefan om hjälp
+//---Campaign Functions------------------------------------------------------------------------------
 void DisplayAllCampaigns(vector <Campaign>list)
 {
 	for (int i = 0; i < list.size(); i++)
@@ -179,15 +169,89 @@ void DisplayAllCampaigns(vector <Campaign>list)
 		cout << "Campaign name: " << list[i].GetCampaignName() << endl
 			<< "Campaign ID: " << list[i].GetCampaignId() << endl
 			<< "Campaign start date: " << ShowTime(list[i].GetFromDateTime()) << endl
-			<< "Campaign end date: " << ShowTime(list[i].GetToDateTime()) << endl; // nånting är fel här fråga stefan!
+			<< "Campaign end date: " << ShowTime(list[i].GetToDateTime()) << endl;
 	}
+}
+void DisplayAllCampaignIDs(vector <Campaign>list)
+{
+	for (int i = 0; i < list.size(); i++)
+	{
+		cout << "Campaign name: " << list[i].GetCampaignName() << endl
+			<< "Campaign ID: " << list[i].GetCampaignId() << endl;
+	}
+}
+Campaign ChooseCampaign(vector<Campaign>CampaignList)
+{
+	int id;
+	DisplayAllCampaignIDs(CampaignList);
+	cout << "Type the campaign id you want to change: " << endl;
+	while (1) 
+	{
+		cin >> id;
+		for (int i = 0; i < CampaignList.size(); i++)
+		{
+			if (id == CampaignList[i].GetCampaignId())
+			{
+				return CampaignList[i];
+			}
+		}
+		cout << "No campaign with that id..." << endl;
+	}
+	
+
+}
+vector<Campaign> UpdateCampaign(vector<Campaign>CampaignList,Campaign campaign)
+{
+	//Function chagne the object and replacing it on the right index and then returning the changed updatedlist
+	int i;
+	for (i = 0; i < CampaignList.size(); i++)
+	{
+		if (campaign.GetCampaignName() == CampaignList[i].GetCampaignName() )
+		{
+			break;
+		}
+	}
+
+	int selection;
+	cout << "1: Update campaign name" << endl;
+	cout << "2: Update campaign ID" << endl;
+	cout << "3: Change/Add campaign cost" << endl;
+	cout << "4: Change from datetime" << endl;
+	cout << "5: Change to datetime" << endl;
+	cout << "6: Exit and make no changes" << endl;
+
+	cin >> selection;
+	switch (selection)
+	{
+	case 1:
+		campaign.ChangeCampaignName(ChangeName());
+		CampaignList.at(i) = campaign;
+		break;
+	case 2:
+		//	Update campaign ID()
+		break;
+	case 3:
+		//	Change/Add campaign cost()
+		break;
+	case 4:
+		//	Change from datetime()
+		break;
+	case 5:
+		//	Change to datetime()
+		break;
+	case 6:
+		//	Exit and make no changes()
+		break;
+	}
+	return CampaignList;
 }
 // Bra måste lägga till felhantering
 vector<Campaign> CreateCampaign(Customer &c)
 {
+	cin.ignore();
 	string name;
-	cout << "Name: ";
-	cin >> name;
+	cout << "Campaign name: ";
+	getline(cin, name);
 
 	int id;
 	cout << "ID: ";
@@ -223,6 +287,7 @@ void CampaignMenu(Customer &c)
 		c.UpdateCampaignList(CreateCampaign(c));
 		break;
 	case 2:
+		c.UpdateCampaignList(UpdateCampaign(c.GetCampaignList(), ChooseCampaign(c.GetCampaignList()))); // GÖR KLART!
 		break;
 	case 3:
 		DisplayAllCampaigns(c.GetCampaignList());
@@ -233,6 +298,7 @@ void CampaignMenu(Customer &c)
 
 }
 
+//---Ad Functions------------------------------------------------------------------------------
 void AdMenu(Customer &c)
 {
 	int selection;
@@ -255,6 +321,8 @@ void AdMenu(Customer &c)
 		return;
 	}
 }
+
+//---Main Menu Functions------------------------------------------------------------------------------
 void CustomerMenu(Customer &c)
 {
 	while (true)
@@ -316,6 +384,30 @@ void ManageCustomersMenu(AdServingEngine& a)
 		break;
 	}
 }
+Customer LoginToCustomer(vector<Customer>list, AdServingEngine& a)
+{
+	if (list.size() == 0)
+	{
+		cout << "No Customers in system" << endl;
+		list = CreateCustomer(a);
+	}
+
+
+	int userIdLogin;
+	cout << "--- Login ---" << endl;
+	cout << "Enter User Id: ";
+	cin >> userIdLogin;
+	for (auto x : list)
+	{
+		if (userIdLogin == x.GetCustomerId())
+		{
+			cout << "User Id: " << x.GetCustomerId() << " Logged in" << endl << endl;
+			return x;
+		}
+	}
+	cout << "No such user ID in system." << endl;
+}
+
 
 int main()
 {
@@ -324,7 +416,7 @@ int main()
 	{
 		int selection;
 
-		a.UpdateCustomerList(CreateAdmin(a));
+		//a.UpdateCustomerList(CreateAdmin(a));
 		cout << "1: Go to customer" << endl;
 		cout << "2: Manage all customers" << endl;
 		cout << "3: Exit" << endl;

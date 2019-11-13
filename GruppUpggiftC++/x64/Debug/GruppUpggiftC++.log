@@ -1,4 +1,4 @@
 ﻿  GruppUpggiftC++.cpp
-D:\OneDrive\Skrivbord\CProjects\GruppUpggiftC++\GruppUpggiftC++\GruppUpggiftC++.cpp(56,58): warning C4267:  'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\OneDrive\Skrivbord\CProjects\GruppUpggiftC++\GruppUpggiftC++\GruppUpggiftC++.cpp(172): warning C4715:  'LoginToCustomer': not all control paths return a value
+D:\OneDrive\Skrivbord\CProjects\GruppUpggiftC++\GruppUpggiftC++\GruppUpggiftC++.cpp(66,58): warning C4267:  'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\OneDrive\Skrivbord\CProjects\GruppUpggiftC++\GruppUpggiftC++\GruppUpggiftC++.cpp(409): warning C4715:  'LoginToCustomer': not all control paths return a value
   GruppUpggiftC++.vcxproj -> D:\OneDrive\Skrivbord\CProjects\GruppUpggiftC++\x64\Debug\GruppUpggiftC++.exe

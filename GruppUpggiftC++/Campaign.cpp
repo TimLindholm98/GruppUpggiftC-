@@ -17,6 +17,10 @@ string Campaign::GetCampaignName()
 {
 	return name;
 }
+void Campaign::ChangeCampaignName(string name) 
+{
+	this->name = name;
+}
 time_t Campaign::GetToDateTime()
 {
 	return toDateTime;
