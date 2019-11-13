@@ -6,3 +6,5 @@
 .vs/GruppUpggiftC++/v16/.suo
 *.ipch
 *.ipch
+*.db
+*.ipch
