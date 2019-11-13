@@ -9,6 +9,7 @@ private:
 
 public:
 	void UpdateCustomerList(vector<Customer>CustomerList);
+	void AddCustomerToCustomerList(Customer c);
 	vector<Customer> GetCustomerList();
 
 };

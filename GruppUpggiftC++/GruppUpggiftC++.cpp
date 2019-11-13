@@ -151,48 +151,54 @@ void DisplayAllCustomers(vector <Customer>list)
 	}
 }
 // Bra måste lägga till felhantering
-vector<Customer> CreateCustomer(AdServingEngine &a)
+vector<Customer> CreateCustomer(AdServingEngine a)
 {
-	cin.ignore();
 	string name;
 	int id;
-
-	cout << "Name: ";
-	getline(cin, name);
-	cout << "ID: ";
-	cin >> id;
-
-	//      fel hantering
-	vector<Customer> list = a.GetCustomerList();
-	for (int i = 0; i < a.GetCustomerList().size(); i++)
+	vector<Customer> newlist = a.GetCustomerList();
+	while (true)
 	{
-		if (list[i].GetCustomerId() == id)
+		bool noDuplicates = true;
+		cin.ignore();
+		cout << "Customer name: ";
+		getline(cin, name);
+		cout << "ID: ";
+		cin >> id;
+
+		for (int i = 0; i < a.GetCustomerList().size(); i++)
 		{
-			cout << "this customer with this id already exists" << endl;
-			return list;
+			if (newlist[i].GetCustomerId() == id)
+			{
+				cout << "this customer with this id already exists" << endl;
+				noDuplicates = false;
+			}
+			else if (newlist[i].GetCustomerName() == name)
+			{
+				cout << "this customer with this name already exists" << endl;
+				noDuplicates = false;;
+			}
 		}
-		else if (list[i].GetCustomerName() == name)
+		if (noDuplicates = true)
 		{
-			cout << "this customer with this name already exists" << endl;
-			return list;
+			break;
 		}
 	}
 	Customer m(name, id);
-	list.push_back(m);
+	newlist.push_back(m);
 
-	return list;
+	return newlist;
 }
 
 //---Campaign Functions------------------------------------------------------------------------------
 void DisplayAllCampaigns(vector <Campaign>list)
 {
 	cout << "----------------------------" << endl;
-	for (int i = 0; i < list.size(); i++)
+	for (Campaign x : list)
 	{
-		cout << "Campaign name: " << list[i].GetCampaignName() << endl
-			<< "Campaign ID: " << list[i].GetCampaignId() << endl
-			<< "Campaign start date: " << ShowTime(list[i].GetFromDateTime()) << endl
-			<< "Campaign end date: " << ShowTime(list[i].GetToDateTime()) << endl;
+		cout << "Campaign name: " << x.GetCampaignName() << endl
+			<< "Campaign ID: " << x.GetCampaignId() << endl
+			<< "Campaign start date: " << ShowTime(x.GetFromDateTime()) << endl
+			<< "Campaign end date: " << ShowTime(x.GetToDateTime()) << endl;
 	}
 	cout << "----------------------------" << endl;
 }
@@ -226,6 +232,7 @@ Campaign ChooseCampaign(vector<Campaign>CampaignList)
 	
 
 }
+// Gör om så den retunera uppdaterade Campaign campaign objektet
 vector<Campaign> UpdateCampaign(vector<Campaign>CampaignList,Campaign campaign)
 {
 	//Function chagne the object and replacing it on the right index and then returning the changed updatedlist
@@ -272,33 +279,40 @@ vector<Campaign> UpdateCampaign(vector<Campaign>CampaignList,Campaign campaign)
 	return CampaignList;
 }
 // Bra måste lägga till felhantering
-vector<Campaign> CreateCampaign(Customer c)
+Campaign CreateCampaign(Customer c)
 {
-	cin.ignore();
 	string name;
-	cout << "Campaign name: ";
-	getline(cin, name);
-
 	int id;
-	cout << "ID: ";
-	cin >> id;
-
-	//      fel hantering
 	vector<Campaign> newlist = c.GetCampaignList();
 
-	for (int i = 0; i < c.GetCampaignList().size(); i++)
+	while (true)
 	{
-		if (newlist[i].GetCampaignId() == id)
+		bool noDuplicates = true;
+		cin.ignore();
+		cout << "Campaign name: ";
+		getline(cin, name);
+		cout << "ID: ";
+		cin >> id;
+
+		for (int i = 0; i < c.GetCampaignList().size(); i++)
 		{
-			cout << "this customer with this id already exists" << endl;
-			return newlist;
+			if (newlist[i].GetCampaignId() == id)
+			{
+				cout << "this campaign with this id already exists" << endl;
+				noDuplicates = false;
+			}
+			else if (newlist[i].GetCampaignName() == name)
+			{
+				cout << "this campaign with this name already exists" << endl;
+				noDuplicates = false;;
+			}
 		}
-		else if (newlist[i].GetCampaignName() == name)
+		if (noDuplicates = true)
 		{
-			cout << "this customer with this name already exists" << endl;
-			return newlist;
+			break;
 		}
 	}
+	
 
 	cout << "--- from datetime ---" << endl << endl;
 	time_t fromDateTime = SetTime();
@@ -306,38 +320,42 @@ vector<Campaign> CreateCampaign(Customer c)
 	time_t toDateTime = SetTime();
 
 	Campaign campaign(name, id, fromDateTime, toDateTime);
-	newlist.push_back(campaign);
+	
 
-	return newlist;
+	return campaign;
 }
 
-Customer CampaignMenu(Customer& c)
+Customer CampaignMenu(Customer c)
 {
 	int selection;
 
-	cout << "1: Create new campaign" << endl;
-	cout << "2: Update campaign" << endl;
-	cout << "3: Read customer campaigns" << endl;
-	cout << "4: Exit" << endl;
-	cin >> selection;
-
-	switch (selection)
+	Customer &refrencetoc = c;
+	
+	
+	while (true)
 	{
-	case 1:
-		c.UpdateCampaignList(CreateCampaign(c));
-		break;
-	case 2:
-		c.UpdateCampaignList(UpdateCampaign(c.GetCampaignList(), ChooseCampaign(c.GetCampaignList()))); // CASE 1 klar!
-		break;
-	case 3:
-		DisplayAllCampaigns(c.GetCampaignList());
-		break;
-	case 4:
-		// Going back to CustomerMenu
-		break;
+		cout << endl << "1: Create new campaign" << endl;
+		cout << "2: Update campaign" << endl;
+		cout << "3: Read customer campaigns" << endl;
+		cout << "4: Exit" << endl;
+		cin >> selection;
+		switch (selection)
+		{
+		case 1:
+			refrencetoc.AddCampaignToCampaignList(CreateCampaign(c));
+			break;
+		case 2:
+			//refrencetoc.AddCampaignToCampaignList(UpdateCampaign(ChooseCampaign(c.GetCampaignList())));
+			c.UpdateCampaignList(UpdateCampaign(c.GetCampaignList(), ChooseCampaign(c.GetCampaignList()))); // CASE 1 kanske klar! OBS måste göra om vad den skickar tillbaka, måste skicka tillbaka ett customer objekt
+			break;
+		case 3:
+			DisplayAllCampaigns(c.GetCampaignList());
+			break;
+		case 4:
+			// Going back to CustomerMenu
+			return refrencetoc;
+		}
 	}
-	return c;
-
 }
 
 //---Ad Functions------------------------------------------------------------------------------
@@ -365,7 +383,7 @@ void AdMenu(Customer c)
 }
 
 //---Main Menu Functions------------------------------------------------------------------------------
-void CustomerMenu(AdServingEngine a,Customer c)
+Customer CustomerMenu(AdServingEngine a,Customer c)
 {
 	while (true)
 	{
@@ -379,20 +397,20 @@ void CustomerMenu(AdServingEngine a,Customer c)
 		cout << "-> " << endl;
 		cin >> selection;
 
+		Customer &refrencetoc = c;
 		switch (selection)
 		{
 		case 1:
 			//CustomerSettingsMenu(c);
 			break;
 		case 2:
-			CampaignMenu(c);
+			refrencetoc = CampaignMenu(c);
 			break;
 		case 3:
 			AdMenu(c);
 			break;
 		case 4:
-			a.UpdateCustomerList(c.GetCampaignList);
-			return;
+			return refrencetoc;
 		}
 
 	}
@@ -428,7 +446,7 @@ void ManageCustomersMenu(AdServingEngine& a)
 		break;
 	}
 }
-Customer& LoginToCustomer(vector<Customer>list, AdServingEngine& a)
+Customer LoginToCustomer(vector<Customer>list, AdServingEngine& a)
 {
 	if (list.size() == 0)
 	{
@@ -436,32 +454,36 @@ Customer& LoginToCustomer(vector<Customer>list, AdServingEngine& a)
 		list = CreateCustomer(a);
 	}
 
-
-	int userIdLogin;
-	cout << "--- Login ---" << endl;
-	cout << "Enter User Id";
-	userIdLogin = returnIntFunction();
-	for (auto x : list)
+	while (true)
 	{
-		if (userIdLogin == x.GetCustomerId())
+		int userIdLogin;
+		cout << "--- Login ---" << endl;
+		cout << "Enter User Id";
+		userIdLogin = returnIntFunction();
+		for (auto x : list)
 		{
-			cout << "User Id: " << x.GetCustomerId() << " Logged in" << endl << endl;
-			return x;
+			if (userIdLogin == x.GetCustomerId())
+			{
+				cout << "User Id: " << x.GetCustomerId() << " Logged in" << endl << endl;
+				return x;
+			}
 		}
+		cout << "No such user ID in system." << endl;
 	}
-	cout << "No such user ID in system." << endl;
+	
 }
 
 
 int main()
 {
-	AdServingEngine a;
-	
+	AdServingEngine ese;
+	AdServingEngine &a = ese;
+	//a.UpdateCustomerList(CreateAdmin(a));
 	while(true)
 	{
 		int selection;
 
-		//a.UpdateCustomerList(CreateAdmin(a));
+		
 		cout << "1: Go to customer" << endl;
 		cout << "2: Manage all customers" << endl;
 		cout << "3: Exit" << endl;
@@ -473,14 +495,14 @@ int main()
 		{
 		case 1:
 		{
-			CustomerMenu(a,LoginToCustomer(a.GetCustomerList(), a));
+			 a.AddCustomerToCustomerList(CustomerMenu(a, LoginToCustomer(a.GetCustomerList(), a)));
 		}
 			break;
 		case 2:
 			ManageCustomersMenu(a);
 			break;
 		case 3:
-			cout << "Exiting program........." << endl << endl;
+			cout << "Exiting program..." << endl << endl;
 			break;
 		}
 	}

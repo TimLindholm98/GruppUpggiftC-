@@ -14,6 +14,10 @@ void Customer::UpdateCampaignList(vector<Campaign> CampaignList)
 {
 	this->CampaignList = CampaignList;
 }
+void Customer::AddCampaignToCampaignList(Campaign campaign)
+{
+	CampaignList.push_back(campaign);
+}
 
 string Customer::GetCustomerName()
 {

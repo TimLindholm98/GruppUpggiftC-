@@ -9,3 +9,7 @@ vector<Customer> AdServingEngine::GetCustomerList()
 {
 	return CustomerList;
 }
+void AdServingEngine::AddCustomerToCustomerList(Customer c)
+{
+	CustomerList.push_back(c);
+}
