@@ -345,7 +345,7 @@ Customer CampaignMenu(Customer c)
 			refrencetoc.AddCampaignToCampaignList(CreateCampaign(c));
 			break;
 		case 2:
-			//refrencetoc.AddCampaignToCampaignList(UpdateCampaign(ChooseCampaign(c.GetCampaignList())));
+			//refrencetoc.AddCampaignToCampaignList(UpdateCampaign(ChooseCampaign(c.GetCampaignList()))); kommer se ut exakt så här
 			c.UpdateCampaignList(UpdateCampaign(c.GetCampaignList(), ChooseCampaign(c.GetCampaignList()))); // CASE 1 kanske klar! OBS måste göra om vad den skickar tillbaka, måste skicka tillbaka ett customer objekt
 			break;
 		case 3:
