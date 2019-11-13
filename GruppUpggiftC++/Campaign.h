@@ -21,7 +21,10 @@ public:
 		time_t fromDateTime,
 		time_t toDateTime);
 
-	int GetID();
+	int GetCampaignId();
+	string GetCampaignName();
+	time_t GetToDateTime();
+	time_t GetFromDateTime();
 	vector<Ad> GetAllAdsForCampaign();
 
 
