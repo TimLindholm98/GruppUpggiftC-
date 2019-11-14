@@ -15,8 +15,14 @@ private:
 public:
 	Ad(string name, int id, string adText, AdType adType);
 
-	AdType GetAdType();
+	string GetName();
 	int GetAdID();
+	string GetAdText();
+	AdType GetAdType();
+
+	void ChangeAdName(string name);
+	void ChangeAdID(int id);
 	void ChangeAdText(string adText);
+	void ChangeAdType(AdType adType);
 
 };
