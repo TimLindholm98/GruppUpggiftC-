@@ -9,7 +9,8 @@ private:
 
 public:
 	void UpdateCustomerList(vector<Customer>CustomerList);
-	void AddCustomerToCustomerList(Customer c);
+	void UpdateCustomer(Customer c, AdServingEngine a);
+	void AddCustomerToCustomerList(Customer c, AdServingEngine a);
 	vector<Customer> GetCustomerList();
 
 };

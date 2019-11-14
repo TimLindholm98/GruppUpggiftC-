@@ -41,7 +41,6 @@ time_t SetTime()
 	int year;
 	int mon;
 	int day;
-	int hour;
 
 	cout << "--- Create a custom time_t ---" << endl;
 	cout << "Type the year you want yy : ";
@@ -52,15 +51,11 @@ time_t SetTime()
 
 	cout << "Type the day you want 1~31 : ";
 	cin >> day;
-	
-	cout << "Type the hour you want 1-23 // hours since midnight // : ";
-	cin >> hour;
 
 	struct tm structTime = { 0 };  // Initalize to all 0's
 	structTime.tm_year = year + 100;  // This is year-1900, so 112 = 2012
 	structTime.tm_mon = mon -1;
-	structTime.tm_mday = day +1;
-	structTime.tm_hour = hour -1;
+	structTime.tm_mday = day;
 
 	time_t time = mktime(&structTime);
 	return time;
@@ -156,9 +151,11 @@ vector<Customer> CreateCustomer(AdServingEngine a)
 	string name;
 	int id;
 	vector<Customer> newlist = a.GetCustomerList();
+	
 	while (true)
 	{
 		bool noDuplicates = true;
+		
 		cin.ignore();
 		cout << "Customer name: ";
 		getline(cin, name);
@@ -178,15 +175,13 @@ vector<Customer> CreateCustomer(AdServingEngine a)
 				noDuplicates = false;;
 			}
 		}
-		if (noDuplicates = true)
+		if (noDuplicates == true)
 		{
-			break;
+			Customer m(name, id);
+			newlist.push_back(m);
+			return newlist;
 		}
 	}
-	Customer m(name, id);
-	newlist.push_back(m);
-
-	return newlist;
 }
 
 //---Campaign Functions------------------------------------------------------------------------------
@@ -346,7 +341,7 @@ Customer CampaignMenu(Customer c)
 			break;
 		case 2:
 			//refrencetoc.AddCampaignToCampaignList(UpdateCampaign(ChooseCampaign(c.GetCampaignList()))); kommer se ut exakt så här
-			c.UpdateCampaignList(UpdateCampaign(c.GetCampaignList(), ChooseCampaign(c.GetCampaignList()))); // CASE 1 kanske klar! OBS måste göra om vad den skickar tillbaka, måste skicka tillbaka ett customer objekt
+			refrencetoc.UpdateCampaignList(UpdateCampaign(c.GetCampaignList(), ChooseCampaign(c.GetCampaignList()))); // CASE 1 kanske klar! OBS måste göra om vad den skickar tillbaka, måste skicka tillbaka ett customer objekt
 			break;
 		case 3:
 			DisplayAllCampaigns(c.GetCampaignList());
@@ -404,13 +399,13 @@ Customer CustomerMenu(AdServingEngine a,Customer c)
 			//CustomerSettingsMenu(c);
 			break;
 		case 2:
-			refrencetoc = CampaignMenu(c);
+			 refrencetoc = CampaignMenu(c);
 			break;
 		case 3:
 			AdMenu(c);
 			break;
 		case 4:
-			return refrencetoc;
+			return c;
 		}
 
 	}
@@ -495,7 +490,11 @@ int main()
 		{
 		case 1:
 		{
-			 a.AddCustomerToCustomerList(CustomerMenu(a, LoginToCustomer(a.GetCustomerList(), a)));
+			// måste spara till ese eller a* 
+			 a.AddCustomerToCustomerList(
+				 CustomerMenu(
+					 a, LoginToCustomer(
+						 a.GetCustomerList(), a)),a);
 		}
 			break;
 		case 2:

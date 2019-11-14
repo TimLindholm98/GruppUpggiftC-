@@ -1,3 +1,4 @@
 ﻿  GruppUpggiftC++.cpp
-D:\OneDrive\Skrivbord\CProjects\GruppUpggiftC++\GruppUpggiftC++\GruppUpggiftC++.cpp(75,58): warning C4267:  'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\OneDrive\Skrivbord\CProjects\GruppUpggiftC++\GruppUpggiftC++\GruppUpggiftC++.cpp(394,42): error C3867:  'Customer::GetCampaignList': non-standard syntax; use '&' to create a pointer to member
+D:\OneDrive\Skrivbord\CProjects\GruppUpggiftC++\GruppUpggiftC++\GruppUpggiftC++.cpp(70,58): warning C4267:  'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\OneDrive\Skrivbord\CProjects\GruppUpggiftC++\GruppUpggiftC++\GruppUpggiftC++.cpp(70,58): warning C4267: FileTracker : error FTK1011: could not create the new file tracking log file: D:\OneDrive\Skrivbord\CProjects\GruppUpggiftC++\GruppUpggiftC++\x64\Debug\GruppUpggiftC++.tlog\CL.read.1.tlog. The file exists.
+  GruppUpggiftC++.vcxproj -> D:\OneDrive\Skrivbord\CProjects\GruppUpggiftC++\x64\Debug\GruppUpggiftC++.exe
