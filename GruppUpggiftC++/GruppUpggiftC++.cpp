@@ -26,6 +26,14 @@ int returnIntFunction()
 	cin >> id;
 	return id;
 }
+float returnFloatFunction()
+{
+	cout << "->";
+	float cost;
+	cin.ignore();
+	cin >> cost;
+	return cost;
+}
 
 string ConvertToString(char* a, int size)
 {
@@ -43,7 +51,7 @@ time_t SetTime()
 	int day;
 
 	cout << "--- Create a custom time_t ---" << endl;
-	cout << "Type the year you want yy : ";
+	cout << "Type the year you want 20yy: ";
 	cin >> year;
 
 	cout << "Type the mon you want 1-12 : ";
@@ -246,7 +254,7 @@ vector<Campaign> UpdateCampaign(vector<Campaign>CampaignList,Campaign campaign)
 	cout << "3: Change/Add campaign cost" << endl;
 	cout << "4: Change from datetime" << endl;
 	cout << "5: Change to datetime" << endl;
-	cout << "6: Exit and make no changes" << endl;
+	cout << "6: Exit" << endl;
 
 	cin >> selection;
 	switch (selection)
@@ -257,21 +265,27 @@ vector<Campaign> UpdateCampaign(vector<Campaign>CampaignList,Campaign campaign)
 		break;
 	case 2:
 		//	Update campaign ID()
+		campaign.ChangeCampaignId(returnIntFunction());
+		CampaignList.at(i) = campaign;
 		break;
 	case 3:
 		//	Change/Add campaign cost()
+		campaign.ChangeCampaignCost(returnFloatFunction());
+		CampaignList.at(i) = campaign;
 		break;
 	case 4:
-		//	Change from datetime()
+		campaign.ChangeFromDateTime(SetTime());
+		CampaignList.at(i) = campaign;
 		break;
 	case 5:
 		//	Change to datetime()
+		campaign.ChangeToDateTime(SetTime());
+		CampaignList.at(i) = campaign;
 		break;
 	case 6:
-		//	Exit and make no changes()
-		break;
+		return CampaignList;
 	}
-	return CampaignList;
+	
 }
 // Bra måste lägga till felhantering
 Campaign CreateCampaign(Customer c)
@@ -502,8 +516,7 @@ int main()
 			break;
 		case 3:
 			cout << "Exiting program..." << endl << endl;
-			return;
+			return 0;
 		}
 	}
-	return 0;
 }

@@ -25,15 +25,14 @@ void AdServingEngine::AddCustomerToCustomerList(Customer c, AdServingEngine a)
 }
 void AdServingEngine::UpdateCustomer(Customer c, AdServingEngine a)
 {
-	int i = 0;
+	int index = 0;
 	for (Customer x : a.GetCustomerList())
 	{
 		if (c.GetCustomerId() == x.GetCustomerId())
 		{
-			CustomerList.at(i) = c;
+			CustomerList.at(index) = c;
 			return;
 		}
-		i++;
+		index++;
 	}
-
 }

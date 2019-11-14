@@ -24,6 +24,10 @@ public:
 	int GetCampaignId();
 	string GetCampaignName();
 	void ChangeCampaignName(string name);
+	void ChangeCampaignId(int id);
+	void ChangeCampaignCost(float);
+	void ChangeToDateTime(time_t toDateTime);
+	void ChangeFromDateTime(time_t fromDateTime);
 	time_t GetToDateTime();
 	time_t GetFromDateTime();
 	vector<Ad> GetAllAdsForCampaign();

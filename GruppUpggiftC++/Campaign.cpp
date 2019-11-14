@@ -21,6 +21,22 @@ void Campaign::ChangeCampaignName(string name)
 {
 	this->name = name;
 }
+void Campaign::ChangeCampaignId(int id)
+{
+	this->id = id;
+}
+void Campaign::ChangeCampaignCost(float CampaignCost)
+{
+	this->CampaignCost = CampaignCost;
+}
+void Campaign::ChangeToDateTime(time_t toDateTime)
+{
+	this->toDateTime = toDateTime;
+}
+void Campaign::ChangeFromDateTime(time_t fromDateTime)
+{
+	this->fromDateTime = fromDateTime;
+}
 time_t Campaign::GetToDateTime()
 {
 	return toDateTime;
