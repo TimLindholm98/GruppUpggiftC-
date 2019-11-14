@@ -31,6 +31,7 @@ public:
 	time_t GetToDateTime();
 	time_t GetFromDateTime();
 	vector<Ad> GetAllAdsForCampaign();
+	void UpdateAdsList(vector<Ad>ads);
 
 
 };

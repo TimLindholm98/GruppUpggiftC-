@@ -22,7 +22,6 @@ int returnIntFunction()
 {
 	cout << "->";
 	int id;
-	cin.ignore();
 	cin >> id;
 	return id;
 }
@@ -34,7 +33,6 @@ float returnFloatFunction()
 	cin >> cost;
 	return cost;
 }
-
 string ConvertToString(char* a, int size)
 {
 	int i;
@@ -51,7 +49,7 @@ time_t SetTime()
 	int day;
 
 	cout << "--- Create a custom time_t ---" << endl;
-	cout << "Type the year you want 20yy: ";
+	cout << "Type the year you want yyyy: ";
 	cin >> year;
 
 	cout << "Type the mon you want 1-12 : ";
@@ -61,7 +59,7 @@ time_t SetTime()
 	cin >> day;
 
 	struct tm structTime = { 0 };  // Initalize to all 0's
-	structTime.tm_year = year + 100;  // This is year-1900, so 112 = 2012
+	structTime.tm_year = year -1900;  // This is year-1900, so 112 = 2012
 	structTime.tm_mon = mon -1;
 	structTime.tm_mday = day;
 
@@ -94,7 +92,6 @@ vector<Customer> CreateAdmin(AdServingEngine a)
 }
 
 //---Customer Functions------------------------------------------------------------------------------
-
 vector<Customer> EraseACustomer(vector <Customer> list)
 {
 	int id;
@@ -153,7 +150,6 @@ void DisplayAllCustomers(vector <Customer>list)
 		cout << "Customer name: " << list[i].GetCustomerName() << endl << "Customer ID: " << list[i].GetCustomerId() << endl;
 	}
 }
-// Bra måste lägga till felhantering
 vector<Customer> CreateCustomer(AdServingEngine a)
 {
 	string name;
@@ -235,7 +231,22 @@ Campaign ChooseCampaign(vector<Campaign>CampaignList)
 	
 
 }
-// Gör om så den retunera uppdaterade Campaign campaign objektet
+Campaign GetCampaign(vector<Campaign> list)
+{
+	while (true)
+	{
+		int id;
+		cout << "Which campaign would you like to add ads to?" << endl << "Enter Campaign ID -> ";
+		cin >> id;
+		for (int i = 0; i < list.size(); i++)
+		{
+			if (list[i].GetCampaignId() == id)
+				return list[i];
+		}
+		cout << "No such ID found...\n";
+		continue;
+	}
+}
 vector<Campaign> UpdateCampaign(vector<Campaign>CampaignList,Campaign campaign)
 {
 	//Function chagne the object and replacing it on the right index and then returning the changed updatedlist
@@ -283,11 +294,10 @@ vector<Campaign> UpdateCampaign(vector<Campaign>CampaignList,Campaign campaign)
 		CampaignList.at(i) = campaign;
 		break;
 	case 6:
-		return CampaignList;
+		break;
 	}
-	
+	return CampaignList;
 }
-// Bra måste lägga till felhantering
 Campaign CreateCampaign(Customer c)
 {
 	string name;
@@ -329,17 +339,13 @@ Campaign CreateCampaign(Customer c)
 	time_t toDateTime = SetTime();
 
 	Campaign campaign(name, id, fromDateTime, toDateTime);
-	
-
 	return campaign;
 }
-
 Customer CampaignMenu(Customer c)
 {
 	int selection;
 
 	Customer &refrencetoc = c;
-	
 	
 	while (true)
 	{
@@ -351,7 +357,7 @@ Customer CampaignMenu(Customer c)
 		switch (selection)
 		{
 		case 1:
-			c.AddCampaignToCampaignList(CreateCampaign(c));
+			c.AddCampaignToCampaignList(c,CreateCampaign(c));
 			break;
 		case 2:
 			//refrencetoc.AddCampaignToCampaignList(UpdateCampaign(ChooseCampaign(c.GetCampaignList()))); kommer se ut exakt så här
@@ -367,27 +373,150 @@ Customer CampaignMenu(Customer c)
 	}
 }
 
-//---Ad Functions------------------------------------------------------------------------------
-void AdMenu(Customer c)
+////---Ad Functions------------------------------------------------------------------------------
+vector<Ad> EraseAnAd(vector <Ad> list)
 {
-	int selection;
-	cout << "1: Create new Ad" << endl;
-	cout << "2: Update Ad" << endl;
-	cout << "3: Read customer Ads" << endl;
-	cout << "4: Exit" << endl;
-
-	cin >> selection;
-	switch (selection)
+	int id;
+	cout << "---Kill menu---" << endl;
+	cout << "Ad ID to erase: ";
+	cin >> id;
+	for (int i = 0; i < list.size(); i++)
 	{
-	case 1:
+		if (list[i].GetAdID() == id)
+		{
+			list.erase(list.begin() + i);
+			cout << endl << "Ad deleted..." << endl;
 
-		break;
-	case 2:
-		break;
-	case 3:
-		break;
-	case 4:
-		return;
+			return list;
+		}
+
+	}
+	cout << "Ad not found..." << endl;
+	return list;
+}
+AdType ChangeAdTypeFunction()
+{
+	AdType adType = AdType_plain;
+	cout << "-> ";
+	int adTypeInput;
+	cin >> adTypeInput;
+	if (adTypeInput == 0)
+		adType = AdType::AdType_scroll;
+	else if (adTypeInput == 1)
+		adType = AdType::AdType_blink;
+	else if (adTypeInput == 2)
+		adType = AdType::AdType_plain;
+	return adType;
+}
+string ShowAdType(AdType adType)
+{
+	string text;
+	if (adType == 0)
+		text = "Scrolling Text";
+	else if (adType == 1)
+		text = "Blinking Text";
+	else if (adType == 2)
+		text = "Plain Text";
+	return text;
+}
+void PrintAds(vector<Ad>ListOfAds)
+{
+	for (auto x : ListOfAds)
+	{
+		cout << "Name -> " << x.GetName() << endl;
+		cout << "Id -> " << x.GetAdID() << endl;
+		cout << "AdType -> " << ShowAdType(x.GetAdType()) << endl; // nice!!! x.
+		cout << "AdText -> " << x.GetAdText() << endl;
+		cout << endl;
+	}
+}
+vector<Ad> CreateNewAd(Campaign& campaign)
+{
+
+	string name, adText;
+	int id;
+	AdType adType = AdType::AdType_plain;
+
+	cout << "Enter name of your Ad "; // GÅR INTE ATT GÖRA MELLANSLAG
+	name = returnStringFunction();
+
+	cout << "Enter ID number ";
+	id = returnIntFunction();
+
+	cout << "Enter Your adtype \n0. for Scroll \n1. for Blinking \n2. For Plain \n";
+	ChangeAdTypeFunction();
+
+	cout << "Enter text for your ad to be displayed ";
+	adText = returnStringFunction();
+
+	Ad newAd(name, id, adText, adType); // BEHÖVS PEKARE HÄR???? fråga steffe
+
+	vector<Ad> lista = campaign.GetAllAdsForCampaign();
+	lista.push_back(newAd);
+
+	return lista;
+}
+vector<Ad> ChangeCampaignAd(vector<Ad>ListOfAds)
+{
+	int i;
+	int adIDinput;
+	cout << "Enter Ad ID to change -> ";
+	cin >> adIDinput;
+	for (i = 0; i < ListOfAds.size(); i++)
+	{
+		if (adIDinput == ListOfAds[i].GetAdID())
+		{
+			break;
+		}
+	}
+
+	for (auto x : ListOfAds)
+	{
+		if (adIDinput == x.GetAdID())
+		{
+			cout << "Enter you new Ad Name ";
+			x.ChangeAdName(returnStringFunction());
+			cout << "Enter your new Ad ID ";
+			x.ChangeAdID(returnIntFunction());
+			cout << "Enter Your new adtype \n0. for Scroll \n1. for Blinking \n2. For Plain \n";
+			x.ChangeAdType(ChangeAdTypeFunction());
+			cout << "Enter your new Ad Text ";
+			x.ChangeAdText(returnStringFunction());
+			ListOfAds.at(i) = x;
+		}
+	}
+	return ListOfAds;
+}
+Campaign AdMenu(Campaign campaign)
+{
+	while (true)
+	{
+		int selection;
+		cout << "1: Create new Ad" << endl;
+		cout << "2: Update Ad" << endl;
+		cout << "3: Show campaign Ads" << endl;
+		cout << "4: Delete Ad" << endl;
+		cout << "5: Exit" << endl;
+
+		cin >> selection;
+		switch (selection)
+		{
+		case 1:
+			campaign.UpdateAdsList(CreateNewAd(campaign));
+			break;
+		case 2:
+			campaign.UpdateAdsList(ChangeCampaignAd(campaign.GetAllAdsForCampaign()));
+			break;
+		case 3:
+			PrintAds(campaign.GetAllAdsForCampaign());
+			break;
+		case 4:
+			campaign.UpdateAdsList(EraseAnAd(campaign.GetAllAdsForCampaign()));
+			break;
+		case 5:
+			cout << "Exiting...\n";
+			return campaign;
+		}
 	}
 }
 
@@ -416,7 +545,8 @@ Customer CustomerMenu(AdServingEngine a,Customer c)
 			 refrencetoc = CampaignMenu(refrencetoc);
 			break;
 		case 3:
-			AdMenu(c);
+			DisplayAllCampaignIDs(c.GetCampaignList());
+			c.AddCampaignToCampaignList(c,AdMenu(GetCampaign(c.GetCampaignList())));
 			break;
 		case 4:
 			return c;

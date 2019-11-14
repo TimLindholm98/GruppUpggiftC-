@@ -14,9 +14,32 @@ void Customer::UpdateCampaignList(vector<Campaign> CampaignList)
 {
 	this->CampaignList = CampaignList;
 }
-void Customer::AddCampaignToCampaignList(Campaign campaign)
+void Customer::AddCampaignToCampaignList(Customer c, Campaign campaign)
 {
+	for (Campaign x : c.GetCampaignList())
+	{
+		if (x.GetCampaignId() == campaign.GetCampaignId())
+		{
+			Customer::UpdateCampaign(c, campaign);
+			return;
+		}
+
+	}
 	CampaignList.push_back(campaign);
+
+}
+void Customer::UpdateCampaign(Customer c, Campaign campaign)
+{
+	int index = 0;
+	for (Campaign x : c.GetCampaignList())
+	{
+		if (campaign.GetCampaignId() == x.GetCampaignId())
+		{
+			CampaignList.at(index) = campaign;
+			return;
+		}
+		index++;
+	}
 }
 
 string Customer::GetCustomerName()

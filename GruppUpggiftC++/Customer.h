@@ -18,7 +18,8 @@ public:
 	void SetCustomerId(int id);
 	vector<Campaign> GetCampaignList();
 	void UpdateCampaignList(vector<Campaign> CampaignList);
-	void AddCampaignToCampaignList(Campaign campaign);
+	void UpdateCampaign(Customer c, Campaign campaign);
+	void AddCampaignToCampaignList(Customer c, Campaign campaign);
 
 
 	string GetCustomerName();

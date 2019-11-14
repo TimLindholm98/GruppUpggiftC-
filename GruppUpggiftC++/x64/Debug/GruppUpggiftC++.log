@@ -1,8 +1,3 @@
-﻿  AdServingEngine.cpp
-  Campaign.cpp
-  Customer.cpp
-  GruppUpggiftC++.cpp
-  Generating Code...
-D:\OneDrive\Skrivbord\CProjects\GruppUpggiftC++\GruppUpggiftC++\GruppUpggiftC++.cpp(78,58): warning C4267:  'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\OneDrive\Skrivbord\CProjects\GruppUpggiftC++\GruppUpggiftC++\GruppUpggiftC++.cpp(289): warning C4715:  'UpdateCampaign': not all control paths return a value
+﻿  GruppUpggiftC++.cpp
+D:\OneDrive\Skrivbord\CProjects\GruppUpggiftC++\GruppUpggiftC++\GruppUpggiftC++.cpp(76,58): warning C4267:  'argument': conversion from 'size_t' to 'int', possible loss of data
   GruppUpggiftC++.vcxproj -> D:\OneDrive\Skrivbord\CProjects\GruppUpggiftC++\x64\Debug\GruppUpggiftC++.exe

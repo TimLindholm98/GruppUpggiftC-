@@ -46,3 +46,12 @@ time_t Campaign::GetFromDateTime()
 	return fromDateTime;
 }
 
+void Campaign::UpdateAdsList(vector<Ad>ads)
+{
+	this->ads = ads;
+}
+vector<Ad> Campaign::GetAllAdsForCampaign()
+{
+	return ads;
+}
+
