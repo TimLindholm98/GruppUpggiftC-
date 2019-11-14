@@ -30,7 +30,7 @@ void AdServingEngine::UpdateCustomer(Customer c, AdServingEngine a)
 	{
 		if (c.GetCustomerId() == x.GetCustomerId())
 		{
-			CustomerList.at(i) = x;
+			CustomerList.at(i) = c;
 			return;
 		}
 		i++;

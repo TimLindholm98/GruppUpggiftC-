@@ -302,7 +302,7 @@ Campaign CreateCampaign(Customer c)
 				noDuplicates = false;;
 			}
 		}
-		if (noDuplicates = true)
+		if (noDuplicates == true)
 		{
 			break;
 		}
@@ -337,7 +337,7 @@ Customer CampaignMenu(Customer c)
 		switch (selection)
 		{
 		case 1:
-			refrencetoc.AddCampaignToCampaignList(CreateCampaign(c));
+			c.AddCampaignToCampaignList(CreateCampaign(c));
 			break;
 		case 2:
 			//refrencetoc.AddCampaignToCampaignList(UpdateCampaign(ChooseCampaign(c.GetCampaignList()))); kommer se ut exakt så här
@@ -348,7 +348,7 @@ Customer CampaignMenu(Customer c)
 			break;
 		case 4:
 			// Going back to CustomerMenu
-			return refrencetoc;
+			return c;
 		}
 	}
 }
@@ -399,7 +399,7 @@ Customer CustomerMenu(AdServingEngine a,Customer c)
 			//CustomerSettingsMenu(c);
 			break;
 		case 2:
-			 refrencetoc = CampaignMenu(c);
+			 refrencetoc = CampaignMenu(refrencetoc);
 			break;
 		case 3:
 			AdMenu(c);
@@ -502,7 +502,7 @@ int main()
 			break;
 		case 3:
 			cout << "Exiting program..." << endl << endl;
-			break;
+			return;
 		}
 	}
 	return 0;
