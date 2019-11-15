@@ -527,10 +527,9 @@ Customer CustomerMenu(AdServingEngine a,Customer c)
 	{
 		int selection;
 		
-		cout << "1: Customer settings" << endl;
-		cout << "2: Campaign menu" << endl;
-		cout << "3: Ad menu" << endl;
-		cout << "4: Exit" << endl;
+		cout << "1: Campaign menu" << endl;
+		cout << "2: Ad menu" << endl;
+		cout << "3: Exit" << endl;
 
 		cout << "-> " << endl;
 		cin >> selection;
@@ -539,16 +538,13 @@ Customer CustomerMenu(AdServingEngine a,Customer c)
 		switch (selection)
 		{
 		case 1:
-			//CustomerSettingsMenu(c);
-			break;
-		case 2:
 			 refrencetoc = CampaignMenu(refrencetoc);
 			break;
-		case 3:
+		case 2:
 			DisplayAllCampaignIDs(c.GetCampaignList());
 			c.AddCampaignToCampaignList(c,AdMenu(GetCampaign(c.GetCampaignList())));
 			break;
-		case 4:
+		case 3:
 			return c;
 		}
 
@@ -612,7 +608,6 @@ Customer LoginToCustomer(vector<Customer>list, AdServingEngine& a)
 	
 }
 
-
 int main()
 {
 	AdServingEngine ese;
@@ -625,6 +620,7 @@ int main()
 		
 		cout << "1: Go to customer" << endl;
 		cout << "2: Manage all customers" << endl;
+		cout << "3: Show next ad" << endl;
 		cout << "3: Exit" << endl;
 
 		cout << "-> ";
@@ -634,7 +630,6 @@ int main()
 		{
 		case 1:
 		{
-			// måste spara till ese eller a* 
 			 a.AddCustomerToCustomerList(
 				 CustomerMenu(
 					 a, LoginToCustomer(
